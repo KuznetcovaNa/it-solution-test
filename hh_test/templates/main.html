@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block css %}
+{% endblock css %}
+
+{% block js %}
+    {{ block.super }}
+
+{% endblock js %}
+
+{% block end_js %}
+    <script src="/static/js/app.js?jsversion=2"></script>
+    <script src="/static/js/app_services.js?jsversion=2"></script>
+{% endblock end_js %}
+
+{% block content %}
+
+    {% verbatim %}
+
+    <div class="container" >
+        <ul class="nav nav-tabs">
+            <li><a ui-sref="task" ui-sref-active="text-muted">Информация</a></li>
+            <li><a ui-sref="user" ui-sref-active="text-muted">Пользователи</a></li>
+            <li><a ui-sref="auto_model" ui-sref-active="text-muted">Модели автомобилей</a></li>
+        </ul>
+
+        <div class="row" ui-view>
+
+        </div>
+
+    </div><!-- /.container -->
+
+    {% endverbatim %}
+
+{% endblock content %}

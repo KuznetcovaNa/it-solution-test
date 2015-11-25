@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h1>Пользователи</h1>
+</div>
+
+<div class="col-lg-4">
+
+    <ul class="nav nav-list">
+        <li ng-repeat="user in users">
+            <a ui-sref="user.view({userId:user.id})">{{ user.username }}</a>
+        </li>
+    </ul>
+</div>
+
+<div class="col-lg-8">
+    <div ui-view>
+        <div class="jumbotron text-center">
+            Выберите пользователя из списка слева
+        </div>
+    </div>
+
+</div>
+
