@@ -25,6 +25,10 @@ app.config(function($stateProvider, $urlRouterProvider){
                     $scope.users = [];
                     $http.get('/api/v1/user/').success(function(data) {
                         $scope.users = data.objects;
+                        $scope.selectedUser = null;
+                        $scope.setSelected = function(idSelectedUser) {
+                            $scope.selectedUser = idSelectedUser;
+                        }
                     }).error(function(data, status, headers, config) {
                             if(status=401){
                                 window.location = '/admin'
@@ -83,3 +87,5 @@ app.config(function($stateProvider, $urlRouterProvider){
 app.run(['$rootScope', function($rootScope) {
 
 }]);
+
+$("a ")
