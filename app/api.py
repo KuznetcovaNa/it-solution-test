@@ -16,5 +16,6 @@ class UserResource(ModelResource):
         queryset = User.objects.all()
         resource_name = 'user'
         authentication = SessionAuthentication()
+        excludes = ['password']
         #list_allowed_methods = []
         #detail_allowed_methods = []
