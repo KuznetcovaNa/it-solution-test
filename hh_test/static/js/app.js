@@ -82,10 +82,31 @@ app.config(function($stateProvider, $urlRouterProvider){
                 }
             ]
         })
+
+        .state('auto_model.view', {
+            url: '/:auto_modelId',
+            views: {
+                '': {
+                    templateUrl: "static/partials/auto_models.view.html",
+                    controller: ['$scope', '$http', '$stateParams',
+                        function( $scope,   $http,   $stateParams) {
+                            $scope.selectedAuto = {};
+                            if ($stateParams.auto_modelId !== 'create'){
+                                $http.get('/api/v1/auto_model/'+$stateParams.auto_modelId+'/').success(function(data) {
+                                $scope.selectedAuto = data;
+                            }).error(function(data, status, headers, config) {
+                                if(status=401){
+                                    window.location = '/admin'
+                                }
+                            })
+                            }
+                        }
+                    ]
+                }
+            }
+        })
 });
 
 app.run(['$rootScope', function($rootScope) {
 
 }]);
-
-$("a ")
