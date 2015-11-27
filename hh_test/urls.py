@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     (r'^$', views.index),
-    (r'^create_auto', views.create_auto),
+    (r'^edit_auto', views.EditAuto.as_view()),
 )
 
 

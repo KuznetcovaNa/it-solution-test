@@ -70,7 +70,6 @@ app.config(function($stateProvider, $urlRouterProvider){
             templateUrl: "static/partials/auto_models.html",
             controller: ['$scope', '$http',
                 function( $scope,   $http) {
-
                     $scope.auto_models = [];
                     $http.get('/api/v1/auto_model/').success(function(data) {
                         $scope.auto_models = data.objects;
@@ -90,21 +89,48 @@ app.config(function($stateProvider, $urlRouterProvider){
                     templateUrl: "static/partials/auto_models.view.html",
                     controller: ['$scope', '$http', '$stateParams',
                         function( $scope,   $http,   $stateParams) {
-                            //$scope.selectedAuto = {};
-                            $scope.postData = function() {
+                            $scope.show_edit_area = true;
+                            $scope.update_auto = function() {
                                 data = {id: $stateParams.auto_modelId, name: $scope.value};
-                                console.log(data);
-                                $http.post('/create_auto', data);
+                                $http.post('/edit_auto', data).success(function(){
+                                    var n = $scope.auto_models.length;
+                                    for (i = 0; i < n; i++){
+                                        $scope.auto_models.pop()
+                                    }
+                                    $http.get('/api/v1/auto_model/').success(function(data) {
+                                        for (i = 0; i < data.objects.length; i++){
+                                            $scope.auto_models.push(data.objects[i])
+                                        }
+                                    });
+                                });
+                                $scope.show_edit_area = false;
+                            };
+                            $scope.delete_auto = function(){
+                                $http.delete('/edit_auto?' + 'id=' + $stateParams.auto_modelId).success(function(){
+                                    var n = $scope.auto_models.length;
+                                    for (i = 0; i < n; i++){
+                                        $scope.auto_models.pop()
+                                    }
+                                    $http.get('/api/v1/auto_model/').success(function(data) {
+                                        for (i = 0; i < data.objects.length; i++){
+                                            $scope.auto_models.push(data.objects[i])
+                                        }
+                                    });
+                                });
+                                $scope.show_edit_area = false;
                             };
                             if ($stateParams.auto_modelId !== 'create'){
-                                $http.get('/api/v1/auto_model/'+$stateParams.auto_modelId+'/').success(function(data) {
-                                    //$scope.selectedAuto = data;
+                                $scope.show_delete_button = true;
+                                $http.get('/api/v1/auto_model/'+$stateParams.auto_modelId+'/').success(function(data){
                                     $scope.value = data.name;
-                            }).error(function(data, status, headers, config) {
-                                if(status=401){
-                                    window.location = '/admin'
-                                }
-                            })
+                                }).error(function(data, status, headers, config){
+                                    if(status=401){
+                                        window.location = '/admin'
+                                    }
+                                })
+                            }
+                            else {
+                                $scope.show_delete_button = false;
                             }
                         }
                     ]

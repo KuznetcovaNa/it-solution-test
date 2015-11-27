@@ -1,4 +1,8 @@
 <h3>Редактирование марки автомобиля</h3>
-<label>Название:</label>
-<input type="text" ng-model="value">
-<input type="submit" value="Сохранить" ng-click="postData()">
+<h5 class="title_choose" ng-show="!show_edit_area">Выберите нужную марку</h5>
+<div ng-show="show_edit_area">
+    <label>Название:</label>
+    <input type="text" ng-model="value">
+    <input type="button" value="Сохранить" ng-click="update_auto()">
+    <input type="button" value="Удалить" ng-click="delete_auto()" ng-show="show_delete_button">
+</div>
