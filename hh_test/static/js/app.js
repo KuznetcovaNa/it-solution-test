@@ -90,10 +90,16 @@ app.config(function($stateProvider, $urlRouterProvider){
                     templateUrl: "static/partials/auto_models.view.html",
                     controller: ['$scope', '$http', '$stateParams',
                         function( $scope,   $http,   $stateParams) {
-                            $scope.selectedAuto = {};
+                            //$scope.selectedAuto = {};
+                            $scope.postData = function() {
+                                data = {id: $stateParams.auto_modelId, name: $scope.value};
+                                console.log(data);
+                                $http.post('/create_auto', data);
+                            };
                             if ($stateParams.auto_modelId !== 'create'){
                                 $http.get('/api/v1/auto_model/'+$stateParams.auto_modelId+'/').success(function(data) {
-                                $scope.selectedAuto = data;
+                                    //$scope.selectedAuto = data;
+                                    $scope.value = data.name;
                             }).error(function(data, status, headers, config) {
                                 if(status=401){
                                     window.location = '/admin'
